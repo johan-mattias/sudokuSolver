@@ -87,11 +87,10 @@ def solve_iter(puzzle):
     #print('solution_tr2')
 
     solution_tr2 = list(map(list, zip(*solution_tr)))
-
-
-    #for row in solution_tr2:
-    #    print(row)
-    
+    '''
+    for row in solution_tr2:
+        print(row)
+    '''
     corners = [[],[],[],[],[],[],[],[],[]]
 
     corners = [puzzle[0][0:3]+puzzle[1][0:3]+puzzle[2][0:3],
@@ -157,11 +156,11 @@ def solve_iter(puzzle):
             #print('tmp2', temp2)
     
             solution_final[indexY][indexX] = list(temp2)
-    '''
-    print('final')
+    
+    '''    print('final')
     for row in solution_final:
         print(row)
-    '''
+    ''' 
     #rows
     for y in range(len(solution_final)):
         for value in range(1,10):
@@ -173,13 +172,17 @@ def solve_iter(puzzle):
             if count == 1:
                 for x in range(len(solution_final[y])):
                     if value in solution_final[y][x] and len(solution_final[y][x]) > 1:
-                        print('boom')
+                        print('row boom', y, x)
                         print(solution_final[y][x])
                         solution_final[y][x] = [value]
                         print(solution_final[y][x])
 
+    '''print('final-after row')
+    for row in solution_final:
+        print(row)
+    '''
     #cols
-    print('all these cols')
+    #print('all these cols')
     solution_final_cols = list(map(list, zip(*solution_final)))
 
     for y in range(len(solution_final_cols)):
@@ -192,15 +195,19 @@ def solve_iter(puzzle):
             if count == 1:
                 for x in range(len(solution_final_cols[y])):
                     if value in solution_final_cols[y][x] and len(solution_final_cols[y][x]) > 1:
-                        print('boom')
+                        print('col boom', y, x)
                         print(solution_final_cols[y][x])
                         solution_final_cols[y][x] = [value]
                         print(solution_final_cols[y][x])
 
     solution_final_cols_back = list(map(list, zip(*solution_final_cols)))
 
+    '''print('final-after row')
+    for row in solution_final_cols_back:
+        print(row)
+    print()
     #TODO:check boxes
-
+    '''
     p = solution_final_cols_back.copy()
 
     solution_boxes = [p[0][0:3]+p[1][0:3]+p[2][0:3],
@@ -212,7 +219,11 @@ def solve_iter(puzzle):
                p[6][0:3]+p[7][0:3]+p[8][0:3],
                p[6][3:6]+p[7][3:6]+p[8][3:6],
                p[6][6:9]+p[7][6:9]+p[8][6:9]]
-
+    '''
+    print('debug')
+    for row in solution_boxes:
+        print(row)
+    '''
     for y in range(len(solution_boxes)):
         for value in range(1,10):
             count = 0
@@ -228,24 +239,19 @@ def solve_iter(puzzle):
                         solution_boxes[y][x] = [value]
                         print(solution_boxes[y][x])
 
-        solution_boxes_2 = [solution_boxes[0][0:3]+solution_boxes[1][0:3]+solution_boxes[2][0:3],
-               solution_boxes[0][3:6]+solution_boxes[1][3:6]+solution_boxes[2][3:6],
-               solution_boxes[0][6:9]+solution_boxes[1][6:9]+solution_boxes[2][6:9],
-               solution_boxes[3][0:3]+solution_boxes[4][0:3]+solution_boxes[5][0:3],
-               solution_boxes[3][3:6]+solution_boxes[4][3:6]+solution_boxes[5][3:6],
-               solution_boxes[3][6:9]+solution_boxes[4][6:9]+solution_boxes[5][6:9],
-               solution_boxes[6][0:3]+solution_boxes[7][0:3]+solution_boxes[8][0:3],
-               solution_boxes[6][3:6]+solution_boxes[7][3:6]+solution_boxes[8][3:6],
-               solution_boxes[6][6:9]+solution_boxes[7][6:9]+solution_boxes[8][6:9]]
-    '''
-    print('these boxes')
-    for row in solution_final_cols_back:
-        print(row)
-    print('those boxes')
-    '''
+    solution_boxes_2 = [solution_boxes[0][0:3]+solution_boxes[1][0:3]+solution_boxes[2][0:3],
+            solution_boxes[0][3:6]+solution_boxes[1][3:6]+solution_boxes[2][3:6],
+            solution_boxes[0][6:9]+solution_boxes[1][6:9]+solution_boxes[2][6:9],
+            solution_boxes[3][0:3]+solution_boxes[4][0:3]+solution_boxes[5][0:3],
+            solution_boxes[3][3:6]+solution_boxes[4][3:6]+solution_boxes[5][3:6],
+            solution_boxes[3][6:9]+solution_boxes[4][6:9]+solution_boxes[5][6:9],
+            solution_boxes[6][0:3]+solution_boxes[7][0:3]+solution_boxes[8][0:3],
+            solution_boxes[6][3:6]+solution_boxes[7][3:6]+solution_boxes[8][3:6],
+            solution_boxes[6][6:9]+solution_boxes[7][6:9]+solution_boxes[8][6:9]]
+    '''print('after boxes')
     for row in solution_boxes:
         print(row)
-
+    '''
     return solution_boxes_2
     
 def solve(puzzle):
@@ -255,7 +261,7 @@ def solve(puzzle):
         print(row)
 
     count = 0
-    while count < 5:
+    while count < 6:
         solution = solve_iter(puzzle)
         '''
         print('solution')
@@ -280,11 +286,21 @@ def run():
 
               [0,2,3, 9,0,0, 7,8,1],
               [0,0,0, 7,0,1, 0,3,0],
-              [0,0,0, 0,3,0, 9,0,0],
+              [7,0,0, 0,3,0, 9,0,0],
 
               [0,6,0, 1,7,0, 3,4,9],
               [1,4,7, 3,0,9, 0,0,8],
               [3,0,9, 6,0,4, 0,1,7]]
+
+              [0, 0, 0, 0, 9, 0, 0, 7, 0]
+              [0, 7, 0, 0, 1, 3, 8, 9, 0]
+              [0, 0, 0, 0, 6, 7, 0, 5, 0]
+              [0, 2, 3, 9, 0, 0, 7, 8, 1]
+              [0, 0, 0, 7, 0, 1, 0, 3, 0]
+              [7, 0, 0, 0, 3, 0, 9, 0, 0]
+              [0, 6, 0, 1, 7, 0, 3, 4, 9]
+              [1, 4, 7, 3, 0, 9, 0, 0, 8]
+              [3, 0, 9, 6, 0, 4, 0, 1, 7]
     '''
     puzzle = [[0,0,0, 0,0,0, 0,7,0],
               [0,7,0, 0,0,3, 8,0,0],
@@ -298,15 +314,17 @@ def run():
               [1,0,0, 0,0,9, 0,0,0],
               [3,0,9, 0,0,4, 0,0,0]]
                
-    solved = [[1,2,3,4,5,6,7,8,9],
-              [4,5,6,7,8,9,1,2,3],
-              [7,8,9,1,2,3,4,5,6],
-              [2,3,4,5,6,7,8,9,1],
-              [5,6,7,8,9,1,2,3,4],
-              [8,9,1,2,3,4,5,6,7],
-              [3,4,5,6,7,8,9,1,2],
-              [6,7,8,9,1,2,3,4,5],
-              [9,1,2,3,4,5,6,7,8,]]
+    solved = [[1,2,3, 4,5,6, 7,8,9],
+              [4,5,6, 7,8,9, 1,2,3],
+              [7,8,9, 1,2,3, 4,5,6],
+
+              [2,3,4, 5,6,7, 8,9,1],
+              [5,6,7, 8,9,1, 2,3,4],
+              [8,9,1, 2,3,4, 5,6,7],
+
+              [3,4,5, 6,7,8, 9,1,2],
+              [6,7,8, 9,1,2, 3,4,5],
+              [9,1,2, 3,4,5, 6,7,8,]]
 
     #print(is_finished(solved))
 
