@@ -157,10 +157,10 @@ def solve_iter(puzzle):
     
             solution_final[indexY][indexX] = list(temp2)
     
-    '''    print('final')
+    print('intersection')
     for row in solution_final:
         print(row)
-    ''' 
+     
     #rows
     for y in range(len(solution_final)):
         for value in range(1,10):
@@ -248,10 +248,10 @@ def solve_iter(puzzle):
             solution_boxes[6][0:3]+solution_boxes[7][0:3]+solution_boxes[8][0:3],
             solution_boxes[6][3:6]+solution_boxes[7][3:6]+solution_boxes[8][3:6],
             solution_boxes[6][6:9]+solution_boxes[7][6:9]+solution_boxes[8][6:9]]
-    '''print('after boxes')
-    for row in solution_boxes:
+    print('possible')
+    for row in solution_boxes_2:
         print(row)
-    '''
+    
     return solution_boxes_2
     
 def solve(puzzle):
@@ -261,13 +261,13 @@ def solve(puzzle):
         print(row)
 
     count = 0
-    while count < 6:
+    while count < 8:
         solution = solve_iter(puzzle)
-        '''
+        
         print('solution')
         for row in solution:
             print(row)
-        '''
+        
         for indexY in range(len(solution)):
             for indexX in range(len(solution[indexY])):
                 if len(solution[indexY][indexX]) == 1:
@@ -302,6 +302,7 @@ def run():
               [1, 4, 7, 3, 0, 9, 0, 0, 8]
               [3, 0, 9, 6, 0, 4, 0, 1, 7]
     '''
+    '''
     puzzle = [[0,0,0, 0,0,0, 0,7,0],
               [0,7,0, 0,0,3, 8,0,0],
               [0,0,0, 0,6,0, 0,5,0],
@@ -313,6 +314,16 @@ def run():
               [0,6,0, 0,7,0, 0,4,0],
               [1,0,0, 0,0,9, 0,0,0],
               [3,0,9, 0,0,4, 0,0,0]]
+    '''
+    puzzle = [[0,0,7,3,0,0,8,4,0],
+              [0,6,0,0,8,0,0,0,3],
+              [0,0,0,0,0,5,9,7,0],
+              [0,0,5,9,7,0,0,0,0],
+              [3,0,0,0,1,8,0,0,9],
+              [0,4,0,0,0,6,0,0,2],
+              [2,0,0,0,0,0,4,0,0],
+              [0,0,4,0,0,0,0,0,5],
+              [0,5,6,0,0,7,0,0,0]]
                
     solved = [[1,2,3, 4,5,6, 7,8,9],
               [4,5,6, 7,8,9, 1,2,3],
