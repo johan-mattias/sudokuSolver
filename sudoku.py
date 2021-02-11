@@ -1,3 +1,5 @@
+debug = False
+
 def box_transform(p):
     ''' Returns the matrix as rows of boxes '''
     p_boxes = [p[0][0:3]+p[1][0:3]+p[2][0:3],
@@ -68,6 +70,12 @@ def find_solution(puzzle):
     return solution
 
 def simplify(solution, kind='row'):
+
+    if debug:
+        print('simplify', kind)
+        for row in solution:
+            print(row)
+
     for y in range(len(solution)):
         for value in range(1,10):
             count = 0
@@ -87,19 +95,35 @@ def simplify(solution, kind='row'):
 def intersect_solution(row, col, box):
     solution = []
 
+    if debug:
+        print('intersect - row')
+        for row1 in row:
+            print(row1)
+        print('intersect - col')
+        for row2 in col:
+            print(row2)
+        print('intersect - box')
+        for row3 in box:
+            print(row3)
+
+
     for indexY in range(9):
         solution.append([])
         for indexX in range(9):
             solution[indexY].append([])
             temp = set(row[indexY][indexX]).intersection(col[indexY][indexX])
-            temp2 = temp.intersection(box[indexY][indexX])
-            solution[indexY][indexX] = list(temp2)
+            temp2 = list(temp.intersection(box[indexY][indexX]))
+            #TODO: check if there's an assignment by intersection
+            solution[indexY][indexX] = temp2
     
+    if True:
+        print('solution intersect')
+        for row4 in solution:
+            print(row4)
+
     solution = simplify(solution, 'row')
     solution = transform(simplify(transform(solution), 'col'))
     solution = box_transform(simplify(box_transform(solution), 'box'))
-
-    #TODO: iterate again and remove possibilities
 
     return solution
 
@@ -107,6 +131,7 @@ def assign(puzzle, solution):
     for indexY in range(len(solution)):
         for indexX in range(len(solution[indexY])):
             if len(solution[indexY][indexX]) == 1:
+                #TODO: make sure that assignment does create a conflict
                 puzzle[indexY][indexX] = solution[indexY][indexX][0]
     return puzzle
 
@@ -118,8 +143,9 @@ def solve_iter(puzzle):
 
     solution = intersect_solution(row_solution, col_solution, box_solution)
 
-    for row in solution:
-        print(row[0:3], "\t", row[3:6], "\t", row[6:9], "\t")
+    if debug:
+        for row in solution:
+            print(row[0:3], "\t", row[3:6], "\t", row[6:9], "\t")
 
     return assign(puzzle, solution)
 
@@ -179,7 +205,7 @@ def run():
               [3,0,0,0,1,8,0,0,9],
               [0,4,0,0,0,6,0,0,2],
               [2,0,0,0,0,0,4,0,0],
-              [0,0,4,0,0,0,0,0,5],
+              [0,0,4,0,0,0,0,0,0],
               [0,5,6,0,0,7,0,0,0]]
                
     solved = [[1,2,3, 4,5,6, 7,8,9],
