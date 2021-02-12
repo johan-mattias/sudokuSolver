@@ -77,12 +77,14 @@ def simplify(solution, kind='row'):
             print(row)
 
     for y in range(len(solution)):
+        instance = dict()
         for value in range(1,10):
             count = 0
             for options in solution[y]:
                 for number in options:
                     if number == value:
                         count += 1
+            instance[value] = count
             if count == 1:
                 for x in range(len(solution[y])):
                     if value in solution[y][x] and len(solution[y][x]) > 1:
@@ -90,6 +92,46 @@ def simplify(solution, kind='row'):
                         print(solution[y][x])
                         solution[y][x] = [value]
                         print(solution[y][x])
+        #print('instance', kind)
+        #print(instance)
+
+        double = []
+        for key, value in instance.items():
+            if value == 2:
+                double.append(key)
+        if len(double) > 1:
+            #print(double)
+            #check if they are from the same intersection
+            check = []
+            for val_index in range(len(double)):
+                check.append([])
+                for index in range(len(solution[y])):
+                    if double[val_index] in solution[y][index]:
+                        check[val_index].append(index)
+            #print(solution[y])
+            #print('check')
+            #print(check)
+            match_index = []
+            for index1 in range(len(check)):
+                for index2 in range(len(check)):
+                    if index1 != index2 and set(check[index1]) == set(check[index2]) and index1<index2:
+                        #print('match', double[index1], double[index2])
+                        match_index.append(double[index1])
+                        match_index.append(double[index2])
+
+                        for op_index in range(len(solution[y])):
+                            if double[index1] in solution[y][op_index] and double[index2] in solution[y][op_index]:
+                                print('boom, lock')
+                                print(double[index1], double[index2], solution[y][op_index] )
+                                solution[y][op_index] = [double[index1], double[index2]]
+                                print(solution[y][op_index])
+
+                                pass
+
+    for row in solution:
+        print(row)
+
+                        
     return solution
 
 def intersect_solution(row, col, box):
